@@ -15,7 +15,7 @@ function Test({ test, handleAnswer, nextQuestion }: PropTypes) {
         <Card>
           {test.image ? (
             <div className="image-container">
-              <Image src={test.image} className="image-test" />
+              <Image src={test.image} className="image-test" height={300} />
             </div>
           ) : (
             ""

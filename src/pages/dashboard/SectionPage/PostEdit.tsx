@@ -34,10 +34,17 @@ function PostEdit({ title, state, getItems, dispatch }: PostEditPropType) {
 
   const postItem = (data: JwtUserType & { photo: any }) => {
     dispatch(setLoading({ ...state.loading, modal: true }));
+    console.log(data);
+    console.log(jwtAxios.defaults.headers.common);
 
     jwtAxios[editItem?._id ? "patch" : "post"](
       `/sections/${editItem?._id || ""}`,
-      data
+      data,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
     )
       .finally(() => {
         dispatch(setLoading({ ...state.loading, modal: false }));

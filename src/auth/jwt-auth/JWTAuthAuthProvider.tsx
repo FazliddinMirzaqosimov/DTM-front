@@ -80,6 +80,7 @@ const JWTAuthAuthProvider = ({ children }: PropType) => {
           }: {
             data: { data: { user: JwtUserType } };
           }) => {
+            // navigator("/");
             return setJWTAuthData({
               user: user,
               isLoading: false,
@@ -105,10 +106,18 @@ const JWTAuthAuthProvider = ({ children }: PropType) => {
       isLoading: true,
     });
     try {
-      const { data } = await jwtAxios.post("/users/signin", {
-        email,
-        password,
-      });
+      const { data } = await jwtAxios.post(
+        "/users/signin",
+        {
+          email,
+          password,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       setToken(data.data.token, data.data.user._id);
 
@@ -119,6 +128,8 @@ const JWTAuthAuthProvider = ({ children }: PropType) => {
       });
       navigator("/");
     } catch (error: any) {
+      console.log(error);
+
       message.error(error?.response?.data?.error || error?.message, 2);
 
       setJWTAuthData({
@@ -131,11 +142,19 @@ const JWTAuthAuthProvider = ({ children }: PropType) => {
 
   const signUpUser = async ({ name, email, password }: signUpTypes) => {
     try {
-      const { data } = await jwtAxios.post("/users/signup", {
-        name,
-        email,
-        password,
-      });
+      const { data } = await jwtAxios.post(
+        "/users/signup",
+        {
+          name,
+          email,
+          password,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       setToken(data.data.token, data.data.user._id);
       setJWTAuthData({
